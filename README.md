@@ -9,6 +9,9 @@
     * [Grunt](http://gruntjs.com)
     * [Node.js](http://nodejs.org)
 
+## Setting gitignore
+- https://git-scm.com/docs/g gitignore
+
 ## IDE Configuration
 - Open Sublime Text
 - Choose Preferences -> Settings - User
