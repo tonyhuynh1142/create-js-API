@@ -1,0 +1,59 @@
+mixin list-1(items)
+  ul&attributes(attributes)
+    each item in items
+      li(class=item.class)
+        +link-1(item)(data-block=item.dataBlock, target="_self")
+    if block
+      block
+
+mixin list-2(items)
+  ul&attributes(attributes)
+    each item in items
+      li(class=item.classItem)
+        span(class=item.classText) #{item.text}
+    if block
+      block
+
+mixin dropdownSimple(title)
+  .dropdown(data-dropdown="true")
+    .dropdown__heading
+      h3.dropdown__title
+        +link-1({text: title})(target="_self")
+      .dropdown__icon.icon-arrow-1-b
+        span.h-text Dropdown Toggle
+    .dropdown__content
+      if block
+        block
+
+mixin stickyNavigation(items)
+  ul.sticky-nav__menu&attributes(attributes)
+    each item in items
+      li.sticky-nav__item(class=item.class, data-scroll-to=item.scrollTo)
+        +link(item.title, item.href).sticky-nav__link
+          span.sticky-nav__text!= item.title
+    if block
+      block
+
+mixin stickyNavigationNoTab(items)
+  ul.sticky-nav__menu&attributes(attributes)
+    - var leng = items.length
+    each item, key in items
+      if ((leng - key) !== 1)
+        li.sticky-nav__item
+          +link(item.title, item.href)(class=item.class).sticky-nav__link
+      else
+        li.sticky-nav__anchor__item(class=item.class)!=item.title
+    if block
+      block
+
+mixin listSocial
+  ul.social-list
+    li.social-list__item
+      +link(href="#", title="Facebook").social-list__link.ico-facebook
+        span.h-text Unibail Facebook Social
+    li.social-list__item
+      +link(href="#", title="Facebook").social-list__link.ico-twitter
+        span.h-text Unibail Twitter Social
+    li.social-list__item
+      +link(href="#", title="Linkedin").social-list__link.ico-in
+        span.h-text Unibail Twitter Social

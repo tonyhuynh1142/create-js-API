@@ -1,0 +1,14 @@
+mixin video(typevideo, srcvideo, srcimage, alt)
+  - if(typeof(srcvideo) === 'undefined') srcvideo = 'https://player.vimeo.com/video/186269874'
+  - if(typeof(srcimage) === 'undefined') srcimage = 'assets/img/page-header-news.png'
+  - if(typeof(srcimage) === 'undefined') srcimage = 'assets/img/page-header-news.png'
+  - if(typeof(alt) === 'undefined') alt = 'image video'
+  - if(typeof(typevideo) === 'undefined') typevideo = ''
+  - id = 'video-player' + Math.round(Math.random() * 1000)
+  .videos
+    .videos__inner(class=typevideo)
+      iframe(src=srcvideo, webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen).videos__inner__iframe
+      .videos__masker
+        +img(srcimage, alt).videos__masker__image(data-image-video)
+        a(href="javascript:;", title="play video", data-play-video).button-play
+          span.explain play the video

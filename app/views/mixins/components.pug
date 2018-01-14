@@ -1,0 +1,459 @@
+mixin breadcrumb(items)
+  nav.breadcrumb(data-sticky-nav)&attributes(attributes)
+    .container
+      +link('Logo').site-logo
+        +img('assets/img/site-logo.png', 'Logo')
+      ul
+        - var leng = items.length
+        each item, key in items
+          if ((leng - key) !== 1)
+            li.breadcrumb__item
+              +link(item.title, item.href).breadcrumb__link
+          else
+            li.breadcrumb__item
+              span.breadcrumb__text!=item.textActive
+      +link('Back to top').back-to-top(data-scroll-to)
+        span.ico-arrow-up
+          span.sr-only arrow up icon
+
+mixin socialList(items)
+  ul.social-list&attributes(attributes)
+    each item in items
+      li.social-list__item
+        +link(item.title, item.href)(target="_blank", class=item.class)
+          span(class=item.classIcon)
+            span.sr-only!= item.textLink
+
+mixin newsItem(items)
+  .news&attributes(attributes)
+    each item in items
+      +link(item.linkImage, item.hrefImage)(class=item.class)
+        +picture([
+          {
+            src: item.srcset1,
+            breakpoint: 1240
+          },
+          {
+            src: item.srcset2
+          }
+        ], item.alt).picture-block
+      .news__info
+        .tag.news__tag
+          each tag in item.tags
+            span.tag-list__item!=tag.tagtext
+        h3.news__title
+          +link(item.title, item.href).news__title-link
+        .news__description
+          p!=item.decs
+        .news__social-time
+          time(datetime!=item.dateTime).news__date!=item.newstime
+          +socialList ([
+            {title: 'Facebook', href: 'https://www.facebook.com/sharer/sharer.php?u=https%3A//www.google.com', textLink: 'Unibail Facebook Social', class: 'social-list__link', classIcon: 'social-icon ico-facebook'},
+            {title: 'Twitter', href: 'https://twitter.com/home?status=https%3A//www.google.com', textLink: 'Unibail Twitter Social', class: 'social-list__link', classIcon: 'social-icon ico-twitter'},
+            {title: 'Linkedin', href: 'https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.google.com&title=Google&summary=&source=', textLink: 'Unibail Twitter Social', class: 'social-list__link', classIcon: 'social-icon ico-in'}
+          ])
+
+mixin simpleDispatch(title, href)
+  +link(title, href)(data-match-height="simple-dispatch_item").simple-dispatch__item
+    span.simple-dispatch__title!=title
+    .simple-dispatch__content
+      if block
+        block
+
+mixin newsItem-1(items)
+  .news&attributes(attributes)
+    each item in items
+      +link(item.linkImage, item.hrefImage)(class=item.class)
+        +picture([
+          {
+            src: item.srcset1,
+            breakpoint: 1240
+          },
+          {
+            src: item.srcset2,
+            breakpoint: 1024
+          },
+          {
+            src: item.srcset3
+          }
+        ], item.alt).picture-block
+      .news__content(data-match-height="news__content")
+        .tag.news__tag(class=item.classTag)
+          each tag in item.tags
+            span.tag-list__item!=tag.tagtext
+        h3(class=item.classTitle)
+          +link(item.title, item.href).news__title-link
+        - var cap = typeof(item.cap) === 'number' ? item.cap : ''
+          case cap
+            when 0
+              time(datetime!=item.dateTime).news__date-time!=item.newsDate
+              p.news__location!=item.newsLocation
+            when 1
+              +link(item.titleFile, item.hrefFile).news__down-file
+                span.ico-file
+                span!=item.titleFile
+          .news__description
+            p!=item.decs
+      +socialList ([
+        {title: 'Facebook', href: 'https://www.facebook.com/sharer/sharer.php?u=https%3A//www.google.com', textLink: 'Unibail Facebook Social', class: 'social-list__link', classIcon: 'social-icon ico-facebook'},
+        {title: 'Twitter', href: 'https://twitter.com/home?status=https%3A//www.google.com', textLink: 'Unibail Twitter Social', class: 'social-list__link', classIcon: 'social-icon ico-twitter'},
+        {title: 'Linkedin', href: 'https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.google.com&title=Google&summary=&source=', textLink: 'Unibail Twitter Social', class: 'social-list__link', classIcon: 'social-icon ico-in'}
+      ])
+
+mixin newsItem-1-editor(items)
+  .news&attributes(attributes)
+    each item in items
+      +link(item.linkImage, item.hrefImage)(class=item.class)
+        +picture([
+          {
+            src: item.srcset1,
+            breakpoint: 1240
+          },
+          {
+            src: item.srcset2
+          }
+        ], item.alt).picture-block
+      .news__content(data-match-height="news__content")
+        .tag.news__tag(class=item.classTag)
+          each tag in item.tags
+            span.tag-list__item!=tag.tagtext
+        h4(class=item.classTitle)
+          +link(item.title, item.href).news__title-link
+        - var cap = typeof(item.cap) === 'number' ? item.cap : ''
+          case cap
+            when 0
+              time(datetime!=item.dateTime).news__date-time!=item.newsDate
+              p.news__location!=item.newsLocation
+            when 1
+              +link(item.titleFile, item.hrefFile).news__down-file
+                span.ico-file
+                span!=item.titleFile
+          .news__description
+            p!=item.decs
+      +socialList ([
+        {title: 'Facebook', href: 'https://www.facebook.com/sharer/sharer.php?u=https%3A//www.google.com', textLink: 'Unibail Facebook Social', class: 'social-list__link', classIcon: 'social-icon ico-facebook'},
+        {title: 'Twitter', href: 'https://twitter.com/home?status=https%3A//www.google.com', textLink: 'Unibail Twitter Social', class: 'social-list__link', classIcon: 'social-icon ico-twitter'},
+        {title: 'Linkedin', href: 'https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.google.com&title=Google&summary=&source=', textLink: 'Unibail Twitter Social', class: 'social-list__link', classIcon: 'social-icon ico-in'}
+      ])
+
+mixin newsItem-1-event(items)
+  .news&attributes(attributes)
+    each item in items
+      +link(item.linkImage, item.hrefImage)(class=item.class)
+        +picture([
+          {
+            src: item.srcset1,
+            breakpoint: 1240
+          },
+          {
+            src: item.srcset2
+          }
+        ], item.alt).picture-block
+      .news__content(data-match-height="news__content")
+        .tag.news__tag(class=item.classTag)
+          each tag in item.tags
+            span.tag-list__item!=tag.tagtext
+        h4(class=item.classTitle)
+          +link(item.title, item.href).news__title-link
+        - var cap = typeof(item.cap) === 'number' ? item.cap : ''
+          case cap
+            when 0
+              time(datetime!=item.dateTime).news__date-time!=item.newsDate
+              p.news__location!=item.newsLocation
+            when 1
+              +link(item.titleFile, item.hrefFile).news__down-file
+                span.ico-file
+                span!=item.titleFile
+          .news__description
+            p!=item.decs
+      +socialList ([
+        {title: 'Facebook', href: 'https://www.facebook.com/sharer/sharer.php?u=https%3A//www.google.com', textLink: 'Unibail Facebook Social', class: 'social-list__link', classIcon: 'social-icon ico-facebook'},
+        {title: 'Twitter', href: 'https://twitter.com/home?status=https%3A//www.google.com', textLink: 'Unibail Twitter Social', class: 'social-list__link', classIcon: 'social-icon ico-twitter'},
+        {title: 'Linkedin', href: 'https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.google.com&title=Google&summary=&source=', textLink: 'Unibail Twitter Social', class: 'social-list__link', classIcon: 'social-icon ico-in'}
+      ])
+
+mixin documentItem(items)
+  .news&attributes(attributes)
+    each item in items
+      +link(item.linkImage, item.hrefImage)(class=item.class, data-toggle="modal", data-target= '#modalTarget', data-confirm, data-download-file='false')
+        +picture([
+          {
+            src: item.srcset1,
+            breakpoint: 1240
+          },
+          {
+            src: item.srcset2
+          }
+        ], item.alt).picture-block
+      .news__content(data-match-height="news__content")
+        .tag.news__tag
+          each tag in item.tags
+            span.tag-list__item!=tag.tagtext
+        h3.news__title
+          +link(item.title, item.href)(data-toggle="modal", data-target= '#modalTarget', data-confirm, data-href=item.href data-download-file='false').news__title-link
+        .news__description
+          p!=item.decs
+      time(datetime!=item.dateTime).news__date-time!=item.newsDate
+
+      +link(item.titleFile, item.hrefFile)(data-toggle="modal", data-target= '#modalTarget', data-confirm, data-download-file='true').news__down-file
+        span.ico-file
+        span!=item.titleFile
+      //- else
+      //-   +link(item.titleFile, item.hrefFile).news__down-file
+      //-     span.ico-file
+      //-     span!=item.titleFile
+
+mixin newsItem-2(items)
+  .news&attributes(attributes)
+    each item in items
+      +link(item.linkImage, item.hrefImage)(class=item.class)
+        +picture([
+          {
+            src: item.srcset1,
+            breakpoint: 1240
+          },
+          {
+            src: item.srcset2
+          }
+        ], item.alt).picture-block
+      .news__content(class=item.classContent, data-match-height="news__content")
+        .tag.news__tag
+          each tag in item.tags
+            span.tag-list__item!=tag.tagtext
+        h3.news__title
+          +link(item.title, item.href).news__title-link
+        .news__description
+          p!=item.decs
+      +socialList ([
+        {title: 'Facebook', href: 'https://www.facebook.com/sharer/sharer.php?u=https%3A//www.google.com', textLink: 'Unibail Facebook Social', class: 'social-list__link', classIcon: 'social-icon ico-facebook'},
+        {title: 'Twitter', href: 'https://twitter.com/home?status=https%3A//www.google.com', textLink: 'Unibail Twitter Social', class: 'social-list__link', classIcon: 'social-icon ico-twitter'},
+        {title: 'Linkedin', href: 'https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.google.com&title=Google&summary=&source=', textLink: 'Unibail Twitter Social', class: 'social-list__link', classIcon: 'social-icon ico-in'}
+      ])
+
+mixin newsItem-2-1(items)
+  .news&attributes(attributes)
+    each item in items
+      +link(item.linkImage, item.hrefImage)(class=item.class)
+        +picture([
+          {
+            src: item.srcset1,
+            breakpoint: 1240
+          },
+          {
+            src: item.srcset2
+          }
+        ], item.alt).picture-block
+      .news__content(class=item.classContent, data-match-height="news__content")
+        .tag.news__tag
+          each tag in item.tags
+            span.tag-list__item!=tag.tagtext
+        h4.news__title
+          +link(item.title, item.href).news__title-link
+        .news__description
+          p!=item.decs
+      +socialList ([
+        {title: 'Facebook', href: 'https://www.facebook.com/sharer/sharer.php?u=https%3A//www.google.com', textLink: 'Unibail Facebook Social', class: 'social-list__link', classIcon: 'social-icon ico-facebook'},
+        {title: 'Twitter', href: 'https://twitter.com/home?status=https%3A//www.google.com', textLink: 'Unibail Twitter Social', class: 'social-list__link', classIcon: 'social-icon ico-twitter'},
+        {title: 'Linkedin', href: 'https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.google.com&title=Google&summary=&source=', textLink: 'Unibail Twitter Social', class: 'social-list__link', classIcon: 'social-icon ico-in'}
+      ])
+
+mixin document-in-rich-text(items)
+  ul.document-rich-text&attributes(attributes)
+    each item in items
+      li.document-rich-text__item
+        +link('Download file')(target="_blank", data-toggle="modal", data-target= '#modalTarget', data-confirm, data-download-file='true').document-rich-text__link
+          span.ico-file
+            span.sr-only File icon
+          | #{item.text}
+          span.document-rich-text__text Download
+    if block
+      block
+
+mixin all-document(items)
+  each item in items
+    .all-document__item
+      .container
+        if (typeof(item.image1) !== 'undefined')
+          .all-document__thumb
+            +link(item.title, item.href)(target="_blank", data-toggle="modal", data-target= '#modalTarget', data-confirm, data-download-file='true').all-document__thumb-link
+              +picture([
+                {
+                  src: item.image1,
+                  breakpoint: 1240
+                },
+                {
+                  src: item.image2
+                }
+              ], item.alt, 'all-document__img').picture-block
+        .all-document__content(class=item.class)
+          .tag-list
+            span.tag-list__item #{item.tag}
+          +link(item.title, item.href)(target="_blank", data-toggle="modal", data-target= '#modalTarget', data-confirm, data-download-file='false').all-document__title
+          time.date(datetime=item.dateTime)
+            | #{item.date}
+            sup th
+            | &nbsp;#{item.year}
+        .all-document__download-wrap
+          +link('Download .pdf 125 KO', item.download_link)(target="_blank", download=item.downloadName, data-toggle="modal", data-target= '#modalTarget', data-confirm, data-download-file='true').all-document__download-link
+            span.ico-file
+              span.sr-only File icon
+            span.all-document__download-text Download .pdf 125 KO
+
+mixin contact(items)
+  .row
+    each item in items
+      .col-sm-6
+        .asset-contact__item
+          .asset-contact__thumb
+            span.ico-gmail
+              span.sr-only Icon gmail
+            +img(item.image, item.name).asset-contact__picture
+          .asset-contact__wrap
+            span.asset-contact__position #{item.position}
+            span.asset-contact__name #{item.name}
+            +link('Contact').asset-contact__contact
+
+mixin newsItem-3(items)
+  .news&attributes(attributes)
+    each item in items
+      +link(item.linkImage, item.hrefImage)(class=item.class)
+        +picture([
+          {
+            src: item.srcset1,
+            breakpoint: 1240
+          },
+          {
+            src: item.srcset2,
+            breakpoint: 1024
+          },
+          {
+            src: item.srcset3
+          }
+        ], item.alt).picture-block
+      .news__content
+        .tag.news__tag(class=item.classTag)
+          each tag in item.tags
+            span.tag-list__item!=tag.tagtext
+        h3(class=item.classTitle)
+          +link(item.title, item.href).news__title-link
+        time(datetime!=item.dateTime).news__date-time!=item.newsDate
+        p.news__location!=item.newsLocation
+        .news__description
+          p!=item.decs
+      +socialList ([
+        {title: 'Facebook', href: 'https://www.facebook.com/sharer/sharer.php?u=https%3A//www.google.com', textLink: 'Unibail Facebook Social', class: 'social-list__link', classIcon: 'social-icon ico-facebook'},
+        {title: 'Twitter', href: 'https://twitter.com/home?status=https%3A//www.google.com', textLink: 'Unibail Twitter Social', class: 'social-list__link', classIcon: 'social-icon ico-twitter'},
+        {title: 'Linkedin', href: 'https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.google.com&title=Google&summary=&source=', textLink: 'Unibail Twitter Social', class: 'social-list__link', classIcon: 'social-icon ico-in'}
+      ])
+
+mixin custom-radio(obj)
+  div(class=obj.classParent ? "custom-radio " + obj.classParent : "custom-radio")
+    input(
+          type = "radio"
+          name = (obj.name||obj.id)
+          class = obj.classInput ? obj.classInput : "custom-radio__controll"
+          value = obj.value ? obj.value : null
+          id = obj.id
+          checked = obj.checked ? obj.checked : null
+        )
+    if (obj.hasIcon)
+      label(for=obj.id, class="custom-radio__label custom-radio__label--location")
+        span(class=obj.iconLabel ? "ico-location "+ obj.iconLabel : "ico-location")
+          span.hidden marker-icon
+        | #{obj.radiolabel||""}
+    else
+      label(for=obj.id, class="custom-radio__label") #{obj.radiolabel||""}
+
+mixin titleBlock(obj)
+  div(class=obj.classParent ? "title-block " + obj.classParent : "title-block")&attributes(attributes)
+    if(obj.hasTitle !== false)
+      h2(class=obj.classHeading ? "title-block__title " + obj.classHeading : "title-block__title")!=obj.titleText
+    if(obj.hastext)
+      span(class=obj.classSubHeading ? "title-block__desc " + obj.classSubHeading : "title-block__desc")!=obj.text
+
+mixin assetResult(items)
+  .asset-result&attributes(attributes)
+    each item in items
+      +picture([
+        {
+          src: item.srcset1,
+          breakpoint: 1240
+        },
+        {
+          src: item.srcset2
+        }
+      ], item.alt).picture-block
+      .asset__content
+        h4.asset__title!=item.title
+        .asset__location.asset__location--shop-center
+          a(href="#", title="link map").link-map
+            span.ico-location.ico-location--shop-center
+              span.hidden Shopping Center
+            p.asset__location-text
+              span!=item.location1
+              span!=item.location2
+        .asset__description
+          p!=item.decs
+        .asset__link
+          p.asset__link-contact
+            +link('Leasing contact').asset__link--item
+          p.asset__link-website
+            +link('Go to website').asset__link--item
+
+mixin text-block(items)
+  each item in items
+    if (typeof(item.title) !== 'undefined')
+      span.text-block__text-large #{item.title}
+    //- .text-block__wrap
+    br
+    span.text-block__text-large #{item.text_large}&nbsp;
+    span.text-block__text-small #{item.text_small}
+
+mixin historyItem(items)
+  .history__item&attributes(attributes)
+    if (typeof(items.title) !== 'undefined')
+      h3.history__title!=items.title
+    p!=items.text
+
+mixin search-result(items)
+  each item in items
+    .search-result__item
+      .search-result__wrap
+        if (typeof(item.image1) !== 'undefined')
+          .search-result__thumb
+            +link('Opening in a new window', item.href)(target="_blank").search-result__thumb-link
+              picture.picture-block
+                source(srcset!=item.image1, media="(min-width: 1240px)")
+                source(srcset!=item.image2, media="(min-width: 480px)")
+                +img(item.image1, item.alt)(class=item.classShadow ? "all-document__img " + item.classShadow : "search-result__img")
+        .search-result__content
+          .tag-list
+            span(class=item.classTagColor ? "tag-list__item " + item.classTagColor : "tag-list__item") #{item.tagName}
+          +link('Opening in a new window', item.href, item.title)(target="_blank").search-result__title
+          if (typeof(item.desc) !== 'undefined')
+            p.search-result__desc #{item.desc}
+          .search-result__breadcrumb
+            - var leng = item.breadcrumb.length
+            each breadcrumb, key in item.breadcrumb
+              if ((leng - key) !== 1)
+                span.breadcrumb__item
+                  span.breadcrumb--text!=breadcrumb.title
+              else
+                span.breadcrumb__item
+                  span.breadcrumb--text-active!=breadcrumb.textActive
+mixin modal(item)
+  - if (typeof item.modalLabel === 'undefined') item.modalLabel = 'modalLabel'
+  .modal.fade(id= 'modalTarget', tabindex = '-1', aria-labelledby= item.modalLabel, role="dialog", data-modal)
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button(type="button", data-dismiss="modal", aria-label="Close").close
+            span(aria-hidden="true") &times;
+        .modal-body
+          p.modal-notice!=item.modalNotice
+          input(type="checkbox", name="confirm", value="confirm", id="confirm").checkbox-confirm
+          label(for="confirm").description
+            span.confirm-text!=item.modalConfirm
+          span.message-checkbox Please check to checkbox!
+        .modal-footer
+          a(href="#", title="confirm", data-link-ex= 'false').btn-confirm CONFIRM

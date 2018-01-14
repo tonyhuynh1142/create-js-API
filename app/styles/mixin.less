@@ -1,0 +1,563 @@
+// Mixin
+@import "css3-mixins.less";
+@import "libs/bootstrap/mixins.less";
+
+// Usage
+// Convert to em
+// .px2em(~"margin", 20px 30px 20px)
+// .px2em(~"font-size", 20px)
+// .px2em(~"font-size", 20px, 18px)
+// Convert to rem
+// .px2rem(~"margin", 20px 30px 20px)
+// .px2rem(~"font-size", 20px)
+// .px2rem(~"font-size", 20px, 18px)
+.px2units(@property, @unit, @target: @font-size-base, @default: @font-size-base) {
+  @n: length(@target);
+  .put(@i) when (extract(@target, @i) = auto), (extract(@target, @i) = 0) {
+    @item: extract(@target, @i);
+    .put((@i + 1), ~"@{item}");
+  }
+  .put(@i) when (default()) {
+    @item: unit(round(extract(@target, @i) / @default, 3), @unit);
+    .put((@i + 1), ~"@{item}");
+  }
+  .put(@i, @item) when (extract(@target, @i) = auto), (extract(@target, @i) = 0) and (@i <= @n) {
+    @nextItem: extract(@target, @i);
+    .put((@i + 1), ~"@{item} @{nextItem}");
+  }
+  .put(@i, @item) when (default()) and (@i <= @n) {
+    @nextItem: unit(round(extract(@target, @i) / @default, 3), @unit);
+    .put((@i + 1), ~"@{item} @{nextItem}");
+  }
+  .put(@i, @item) when (@i > @n) {
+    @{property}: @item;
+  }
+  .put(1);
+}
+.px2em(@property, @target: @font-size-base, @default: @font-size-base) {
+  .px2units(@property, em, @target, @default);
+}
+.px2rem(@property, @target: @font-size-base, @default: @font-size-base) {
+  .px2units(@property, rem, @target, @default);
+}
+
+// Sizing shortcuts
+.size(@width, @height: @width) {
+  width: @width;
+  height: @height;
+}
+
+
+// ==========================================================
+// Mixin placeholder
+.placeholder(@color) {
+  &::-webkit-input-placeholder {
+    color: @color;
+  }
+
+  &:-moz-placeholder {
+    color: @color;
+  }
+
+  &::-moz-placeholder {
+    color: @color;
+  }
+
+  &:-ms-input-placeholder {
+    color: @color;
+  }
+}
+
+// Mixin color theme
+.themecolor-social(@color) {
+  .news--hook,
+  .news--event {
+    .social-list__link:hover {
+      .social-icon {
+        color: @color;
+      }
+    }
+  }
+}
+
+.themecolor-social-home(@color) {
+  .social-list__link:hover {
+    .social-icon {
+      color: @color;
+    }
+  }
+}
+
+.themecolor-mainheader(@color) {
+  .no-touch &:hover,
+  &.focused,
+  &.active,
+  &.opened {
+    &:before {
+      background: @color;
+    }
+
+    .main-header__nav-item--a {
+      color: @color;
+    }
+  }
+
+  &.active {
+    a {
+      background: none;
+    }
+  }
+
+  .main-header__sub-nav--item {
+    .no-touch &:hover {
+      a {
+        color: @color;
+        font-weight: bold;
+        text-decoration: none;
+      }
+    }
+
+    .no-touch &--overview:hover {
+      a {
+        font-family: @din-regular;
+        font-weight: normal;
+        color: @white;
+      }
+    }
+
+    &--overview {
+      a {
+        background: @color;
+      }
+    }
+  }
+}
+
+.theme-sticky-nav(@color) {
+  .sticky-nav__item {
+    &.active,
+    &:focus {
+      .sticky-nav__link {
+        .sticky-nav__text {
+          color: @color;
+        }
+      }
+    }
+  }
+
+  .active {
+    .sticky-nav__link {
+      .sticky-nav__text {
+        color: @color;
+      }
+    }
+  }
+
+  .sticky-nav__anchors,
+  .sticky-nav__tabs {
+    .sticky-nav__link {
+      .sticky-nav__text {
+        color: @white;
+      }
+    }
+  }
+
+  .sticky-nav__link {
+    .no-touch &:hover,
+    &:focus {
+      .sticky-nav__text {
+        color: @color;
+      }
+    }
+  }
+
+  .sticky-nav {
+    .select-menu {
+      color: @color;
+
+      &:after {
+        border-left-color: @color;
+      }
+    }
+  }
+}
+
+.theme-page-header(@bg-color) {
+  .post {
+    background-color: @bg-color;
+  }
+
+  .page-header {
+    &__wrap {
+      background-color: @bg-color;
+    }
+  }
+}
+
+.simple-dispatch-color(@color) {
+  .no-touch &:hover,
+  &:focus {
+    @hover-border-color: rgba(@color, .3);
+    border-color: @hover-border-color;
+
+    &:after { background-color: @color; }
+  }
+
+  .simple-dispatch__title { color: @color; }
+}
+
+.key-information-color(@color, @color-darker, @color-lighter) {
+  &__icon {
+    background-color: @color-lighter;
+
+    &--4 { background-color: @color; }
+  }
+
+  &__figure2 { background-color: @color; }
+
+  &__figure3 { background-color: @color-darker; }
+
+  // &__figure-summary { background-color: @color-darker; }
+}
+
+.rebound-color(@color) {
+  .rebound__image { background-color: @color; }
+
+  // .rebound__content {
+  //   background-color: @color;
+  // }
+  .no-touch &:hover,
+  &:focus {
+    &:after { color: @color; }
+
+    .rebound__title,
+    .rebound__label {
+      color: @color;
+    }
+  }
+}
+
+.allnews-color(@color) {
+  .news__title,
+  .news__title-small {
+    .news__title-link {
+      .no-touch &:hover,
+      &:focus,
+      &:active {
+        color: @color;
+      }
+    }
+  }
+}
+
+.themecolor-allnews(@color) {
+  .news {
+    .news__title {
+      .news__title-link {
+        &:hover,
+        &:focus,
+        &:active {
+          color: @color;
+        }
+      }
+    }
+  }
+}
+
+.themecolor-article(@color) {
+  .article {
+    &__red-text {
+      color: @color;
+    }
+  }
+}
+
+.tagcolor(@color) {
+  .tag-list__item {
+    strong {
+      color: @color;
+    }
+  }
+}
+
+.themecolor-asset-overview(@color) {
+  .asset-overview {
+    .button__color:hover {
+      background-color: @color;
+    }
+
+    &__download-link:hover {
+      color: @color;
+    }
+  }
+}
+
+.themecolor-asset-contact(@color, @color1) {
+  .asset-contact {
+    &__thumb {
+      .ico-gmail {
+        background-color: @color1;
+      }
+    }
+
+    &__contact {
+      color: @color;
+
+      .no-touch &:hover,
+      &:focus {
+        color: @color;
+      }
+    }
+  }
+}
+
+.themecolor-docs-in-rich(@color) {
+  .document-rich-text {
+    &__link {
+      &:hover,
+      &:focus {
+        .document-rich-text__text {
+          color: @color;
+        }
+      }
+    }
+  }
+}
+
+.themecolor-media(@color) {
+  .image-component,
+  .videos {
+    &:before {
+      background-color: @color;
+    }
+  }
+
+  .videos__masker:hover {
+    .button-play {
+      color: @color;
+
+      &:before {
+        color: @color;
+      }
+    }
+  }
+
+  .image-component:after {
+    background-color: @color;
+  }
+
+  .wrapper-top-left {
+    .content {
+      &:before,
+      &:after {
+        background-color: @color;
+      }
+    }
+  }
+
+  // .wrapper-bottom-left {
+  //   .content {
+  //     &:before,
+  //     &:after {
+  //       background-color: @color;
+  //     }
+  //   }
+  // }
+}
+
+.themecolor-rich-text(@color) {
+  .rich-text {
+    &__text {
+      &:before {
+        background-color: @color;
+      }
+    }
+
+    &__quote,
+    &__highlighted {
+      color: @color;
+    }
+
+    &__separator,
+    .image-component {
+      &:after {
+        background-color: @color;
+      }
+    }
+
+    .rich-text__right,
+    .rich-text__left {
+      .content {
+        background-color: @color;
+      }
+    }
+
+    &__highlighted-box {
+      background-color: @color;
+    }
+  }
+}
+
+.themecolor-event-calendar(@color) {
+  .event-calendar__push {
+    .social {
+      background-color: @color;
+    }
+
+    .atcb-list {
+      background-color: @color;
+    }
+  }
+}
+
+.themecolor-highlighted(@color, @color1) {
+
+  // .highlighted-event,
+  // .highlighted-news {
+  //   &__left,
+  //   &__right {
+  //     &:before {
+  //       background-color: @color;
+  //     }
+  //   }
+  // }
+
+  .content-event,
+  .content-news {
+    .read-more {
+      color: @color;
+    }
+
+    &__label {
+      color: @color;
+    }
+  }
+
+  // .atcb-list {
+  //   background-color: @color;
+  // }
+}
+
+.event-calendar-color(@color) {
+  background-color: @color;
+
+  .ui-datepicker-calendar {
+    a,
+    span {
+      border-color: @color;
+
+      &.ui-state-active {
+        color: @color;
+      }
+    }
+  }
+
+  .atcb-list {
+    background-color: @color;
+  }
+}
+
+.themecolor-tag-list(@color) {
+  .news-hook,
+  .news {
+    .tag-list__item {
+      color: @color;
+    }
+  }
+}
+
+.themecolor-download-document(@color) {
+  .news__down-file {
+    &:hover {
+      color: @color;
+    }
+  }
+}
+
+.theme-asset-button(@color) {
+  .button__color {
+    .no-touch &:hover {
+      background-color: @color;
+    }
+  }
+}
+
+.theme-member-result(@color) {
+  .board-result__link {
+    .no-touch &:hover {
+      .board-result__name,
+      .board-result__name:after,
+      .board-result__title {
+        color: @color;
+      }
+    }
+  }
+}
+
+.theme-link-in-rich-text(@color) {
+  .rich-text {
+    &__link {
+      color: @color;
+    }
+  }
+}
+
+.theme-allnews-result(@color) {
+  .all-news {
+    .news__title-link,
+    .social-list__link {
+      .no-touch &:hover,
+      &:focus,
+      &:active {
+        color: @color;
+      }
+    }
+  }
+}
+
+.theme-download-link(@color) {
+  .download-link {
+    a {
+      color: @color;
+    }
+  }
+
+  a {
+    .no-touch &:hover {
+      color: @color;
+    }
+  }
+}
+
+.theme-all-documents(@color) {
+  .all-document {
+    &__filter {
+      background-color: @color;
+    }
+
+    &__year {
+      .year {
+        color: @color;
+      }
+    }
+
+    &__title {
+      .no-touch &:hover {
+        color: @color;
+      }
+    }
+
+    &__download-link {
+      .no-touch &:hover {
+        .ico-file,
+        .all-document__download-text {
+          color: @color;
+        }
+      }
+    }
+
+    .tag-list__item {
+      color: @color;
+    }
+  }
+}

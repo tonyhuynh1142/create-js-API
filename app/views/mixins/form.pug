@@ -1,0 +1,79 @@
+//- Form
+mixin form(opts)
+  form(action=opts.action ? opts.action : '#',
+    method=opts.method ? opts.method : 'post',
+    name=opts.name ? opts.name : opts.name = opts.id,
+    id=opts.id ? opts.id : opts.name)&attributes(attributes)
+    if block
+      block
+
+//- Input
+mixin input(opts)
+  -if(typeof(opts.id) === 'undefined') opts.id = opts.name
+  label(for=opts.id, class=opts.classLabel)!= opts.textLabel
+  input(type=opts.type ? opts.type : 'text',
+    name=opts.name ? opts.name : opts.name = opts.id,
+    class=opts.class,
+    id=opts.id ? opts.id : opts.name,
+    value=opts.value,
+    checked=opts.checked,
+    title=opts.title,
+    required=opts.required,
+    min=opts.min,
+    maxlength=opts.max,
+    max=opts.maxNumber,
+    data-error=opts.error,
+    placeholder=opts.placeholder)&attributes(attributes)
+
+//- Button
+mixin button(opts)
+  - if(typeof(opts.title) === 'undefined') opts.title = opts.name
+  button(type=opts.type,
+    name=opts.name,
+    title=opts.title,
+    id=opts.id)&attributes(attributes)
+    if block
+      block
+
+//- Select option
+mixin select(opts)
+  label(for!=opts.id?opts.id:opts.name, class=opts.clasLabel)!=opts.textLabel
+  select(name=opts.name, id=opts.id?opts.id:opts.name)&attributes(attributes)
+    each item in opts.optionList
+      option(value=item.value, selected=item.selected)!=item.text
+
+//- Textarea
+mixin textarea(opts)
+  -if(typeof(opts.id) === 'undefined') opts.id = opts.name
+  -if(typeof(opts.rows) === 'undefined') opts.rows = '5'
+  label(for=opts.id, class=opts.clasLabel)!= opts.textLabel
+  textarea(
+    name=opts.name ? opts.name : opts.name = opts.id,
+    class=opts.class,
+    id=opts.id ? opts.id : opts.name,
+    title=opts.title,
+    required=opts.required,
+    min=opts.min,
+    rows=opts.rows,
+    maxlength=opts.max,
+    data-error=opts.error,
+    placeholder=opts.placeholder)&attributes(attributes)!=opts.value
+
+
+mixin custom-radio(obj)
+  div(class=obj.classParent ? "custom-radio " + obj.classParent : "custom-radio")
+    input(
+          type = "radio"
+          name = (obj.name||obj.id)
+          class = obj.classInput ? obj.classInput : "custom-radio__controll"
+          value = obj.value ? obj.value : null
+          checked = obj.checked ? obj.checked : null
+          id = obj.id
+        )
+    if (obj.hasIcon)
+      label(for=obj.id, class="custom-radio__label custom-radio__label--location")
+        span(class=obj.iconLabel ? "ico-location "+ obj.iconLabel : "ico-location")
+          span.hidden #{obj.radiolabel||""}
+        | #{obj.radiolabel||""}
+    else
+      label(for=obj.id, class="custom-radio__label") #{obj.radiolabel||""}

@@ -1,0 +1,18 @@
+mixin img(src, alt)
+  - if (typeof(src) === 'undefined') href = 'assets/img/transparent.png'
+  - if (typeof(alt) === 'undefined') alt = 'image information'
+  img(src="#{src}", alt="#{alt}")&attributes(attributes)
+
+mixin img-h(w, h)
+  - w = (w ? w : 150)
+  - h = (h ? h : 150)
+  img(src="http://placehold.it/#{w}x#{h}/", alt="image information")&attributes(attributes)
+
+mixin picture(images, alt, imgClass)
+  - if (typeof(imgClass) === 'undefined') imgClass = ''
+  picture&attributes(attributes)
+    each image in images
+      if image.breakpoint
+        source(srcset="#{image.src}", media="(min-width: #{image.breakpoint}px)")
+      else
+        img(srcset="#{image.src}", src="#{images[0].src}", alt="#{alt}", class="#{imgClass}", data-img)

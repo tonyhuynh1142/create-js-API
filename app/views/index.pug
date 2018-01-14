@@ -1,0 +1,29 @@
+extends layouts/layout
+
+block vars
+  -title = 'Homepage'
+  -bodyClass = 'home'
+  -menuIndex = 0
+
+block container
+  .row
+    .col-xs-12.col-sm-6.col-md-6.col-lg-6
+      form.form-horizontal( method="GET", action="data/data-login.json", role='form', novalidate="novalidate", data-validate-form, data-form-call-ajax)
+        .form-group
+          legend Form Login
+        .form-group
+          div.number-error 
+          p(
+            data-default-error='The username or password you entered is incorrect. Please try again.',
+            data-msg-error
+          ).form-error The username or password you entered is incorrect. Please try again.
+        .form-group
+          label.sr-only(for='txtEmail') Email
+          input.form-control(type='email', id='txtEmail', name='txtEmail', placeholder='Email', required="")
+        .form-group
+          label.sr-only(for='txtPassword') Password
+          input.form-control(type='password', id='txtPassword', name='txtPassword', placeholder='Password', required="")
+        .form-group
+          button.btn.btn-primary(type='submit') Submit
+  
+

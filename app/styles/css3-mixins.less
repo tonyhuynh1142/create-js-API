@@ -1,0 +1,278 @@
+.keyframes(@name, @args) {
+  @-webkit-keyframes @name {
+    @args();
+  }
+  @keyframes @name {
+    @args();
+  }
+}
+
+.animation(@args) {
+  -webkit-animation: @args;
+  animation: @args;
+}
+
+.animation-delay(@delay) {
+  -webkit-animation-delay: @delay;
+  animation-delay: @delay;
+}
+
+.animation-direction(@direction) {
+  -webkit-animation-direction: @direction;
+  animation-direction: @direction;
+}
+
+.animation-duration(@duration) {
+  -webkit-animation-duration: @duration;
+  animation-duration: @duration;
+}
+
+.animation-fill-mode(@mode) {
+  -webkit-animation-fill-mode: @mode;
+  animation-fill-mode: @mode;
+}
+
+.animation-name(@name) {
+  -webkit-animation-name: @name;
+  animation-name: @name;
+}
+
+.animation-timing-function(@function) {
+  -webkit-animation-timing-function: @function;
+  animation-timing-function: @function;
+}
+
+// Columns
+.columns(@args) {
+  -webkit-columns: @args;
+  -moz-columns: @args;
+  columns: @args;
+}
+
+.columns-count(@count) {
+  -webkit-column-count: @count;
+  -moz-column-count: @count;
+  column-count: @count;
+}
+
+.columns-gap(@gap) {
+  -webkit-column-gap: @gap;
+  -moz-column-gap: @gap;
+  column-gap: @gap;
+}
+
+.columns-width(@width) {
+  -webkit-column-width: @width;
+  -moz-column-width: @width;
+  column-width: @width;
+}
+
+.columns-rule(@args) {
+  -webkit-column-rule: @args;
+  -moz-column-rule: @args;
+  column-rule: @args;
+}
+
+
+// Gradients
+// Usage
+// Only support for from left or top
+// .gradient(left, #444111 0%, #222111 100%) - 2 colors
+// .gradient(left, #444111 0%, #222111 50%, #333111 100%) - 3 colors
+// .gradient(top, #444111 0%, #222111 50%, #444222 75%, #555111 100%) - 4 colors
+.gradient(@type, @restColor...) {
+  @gradientType: 0;
+  @n: length(@restColor);
+  @startColor: extract(extract(@restColor, 1), 1);
+  @endColor: extract(extract(@restColor, @n), 1);
+
+  .gra(@type) when (@type = left) {
+    @gradientType: 1;
+  }
+
+  .gra(@type);
+
+  .loop(@i) {
+    @item: extract(@restColor, @i);
+    .loop((@i + 1), ~"@{type}, @{item}");
+  }
+  .loop(@i, @item) when (@i <= @n) {
+    @nextItem: extract(@restColor, @i);
+    .loop((@i + 1), ~"@{item}, @{nextItem}");
+  }
+  .loop(@i, @item) when (@i > @n) {
+    background-image: -webkit-linear-gradient(@item);
+    background-image: linear-gradient(@item);
+    // filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=%d)",argb(@startColor),argb(@endColor),@gradientType));
+  }
+  .loop(1);
+
+}
+
+// UserSelect
+.user-select(@select: auto) {
+  -webkit-user-select: @select;
+  -moz-user-select: @select;
+  -ms-user-select: @select;
+  user-select: @select;
+}
+
+// Transforms
+.transform(@args) {
+  -webkit-transform: @args;
+  -ms-transform: @args;
+  transform: @args;
+}
+
+.transform-origin(@args) {
+  -webkit-transform-origin: @args;
+  -ms-transform-origin: @args;
+  transform-origin: @args;
+}
+
+.transform-style(@style) {
+  -webkit-transform-style: @style;
+  -ms-transform-style: @style;
+  transform-style: @style;
+}
+
+.rotate(@deg: 45deg) {
+  .transform(rotate(@deg));
+}
+
+.scale(@factor: .5) {
+  .transform(scale(@factor));
+}
+
+.translate(@x, @y) {
+  .transform(translate(@x, @y));
+}
+
+.translateX(@x) {
+  .transform(traslateX(@x));
+}
+
+.translateY(@y) {
+  .transform(translateY(@y));
+}
+
+.translate3d(@x, @y, @z) {
+  .transform(translate3d(@x, @y, @z));
+}
+
+// Flexbox
+.flex-block() {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.flex-inline() {
+  display: -ms-inline-flexbox;
+  display: -webkit-inline-flex;
+  display: inline-flex;
+}
+
+.flex-flow(@direction: row, @wrap: nowrap) {
+  -ms-flex-direction: @direction;
+  -ms-flex-wrap: @wrap;
+  -webkit-flex-flow: @direction @wrap;
+  flex-flow: @direction @wrap;
+}
+
+.align-content(@alignment) {
+  -ms-align-content: @alignment;
+  -webkit-align-content: @alignment;
+  align-content: @alignment;
+}
+
+.flex-direction(@direction: row) {
+  -webkit-flex-direction: @direction;
+  -ms-flex-direction: @direction;
+  flex-direction: @direction;
+}
+
+.flex-wrap(@wrap: nowrap) {
+  -webkit-flex-wrap: @wrap;
+  -ms-flex-wrap: @wrap;
+  flex-wrap: @wrap;
+}
+
+.justify-content(@justification) {
+  -webkit-box-pack: @justification;
+  -ms-flex-pack: replace(@justification, "flex-", "");
+  -webkit-justify-content: @justification;
+  justify-content: @justification;
+}
+
+.align-items(@mode) {
+  -webkit-box-align: @mode;
+  -ms-flex-align: @mode;
+  -webkit-align-items: @mode;
+  align-items: @mode;
+}
+
+.flex(@args: none) {
+  -ms-flex: @args;
+  -webkit-flex: @args;
+  flex: @args;
+}
+
+.order(@order: 0) {
+  -webkit-box-ordinal-group: @order;
+  -ms-box-ordinal-group: @order;
+  -ms-flex-order: @order;
+  -webkit-order: @order;
+  -ms-order: @order;
+  order: @order;
+}
+
+.flex-grow(@grow: 1) {
+  -ms-flex-grow: @grow;
+  -webkit-flex-grow: @grow;
+  flex-grow: @grow;
+}
+
+.flex-shrink(@shrink: 1) {
+  -ms-flex-shrink: @shrink;
+  -webkit-flex-shrink: @shrink;
+  flex-shrink: @shrink;
+}
+
+.flex-basis(@basis: auto) {
+  -ms-flex-basis: @basis;
+  -webkit-flex-basis: @basis;
+  flex-basis: @basis;
+}
+
+.align-self(@align: auto) {
+  -ms-align-self: @align;
+  -webkit-align-self: @align;
+  align-self: @align;
+}
+
+// BorderRadius
+// Usage
+// .border-radius() - default is 50%
+// .border-radius(20px) - all border is 20px
+// .border-radius(5px null 20px) - top left and bottom left border
+// .border-radius(null null 20px) - bottom left border
+.border-radius(@radius: 50%) {
+  @n: length(@radius);
+  @position: top-left, top-right, bottom-left, bottom-right;
+  .put(@i) when (@n = 1) and (@i <= length(@position)) {
+    @str: extract(@position, @i);
+    border-@{str}-radius: @radius;
+    .put(@i + 1);
+  }
+  .put(@i) when (@n > 1)  and (@i <= length(@position)) and (@i <= @n){
+    @r: extract(@radius, @i);
+    .check() when not (@r = null) {
+      @str: extract(@position, @i);
+      border-@{str}-radius: @r;
+    }
+    .check();
+    .put(@i + 1);
+  }
+  .put(1);
+}

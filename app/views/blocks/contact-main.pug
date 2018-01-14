@@ -1,0 +1,69 @@
+include ../mixins/all
+
+.row
+  .col-xs-12.col-sm-12.col-md-12.col-lg-12
+    .alert.alert-success
+      strong Contact Form
+
+  .col-xs-12.col-sm-12.col-md-12.col-lg-12
+    section.contact-block
+      +form({
+        method: 'GET',
+        action: 'data/form-contact.json'
+      })(data-form-validate, novalidate).contact-block__form
+        fieldset
+          fieldset.contact-block__field.contact-block--radio
+            label(for="civility").contact-block__label Civility*
+            .contact-block__field__radio(data-msg-required= "Please checked ratio")
+              +custom-radio({
+                name: "civility",
+                class: "civility__mr",
+                value: "mr",
+                id: "civility__mr",
+                radiolabel: "Mr"
+              })
+              +custom-radio({
+                name: "civility",
+                class: "civility__mme",
+                value: "mme",
+                id: "civility__mme",
+                radiolabel: "Mme"
+              })
+          .contact-block__field
+            +input({
+              name: 'fitstname',
+              type: 'text',
+              class: 'firstname',
+              textLabel: 'First name*',
+              classLabel: 'contact-block__label'
+            })(data-msg-required= "Please input first name", data-rule= "firstname", data-required= "true").form-control.contact-block__field__input
+          .contact-block__field
+            +input({
+              name: 'lastname',
+              type: 'text',
+              class: 'lastname',
+              textLabel: 'Last name*',
+              classLabel: 'contact-block__label'
+            })(data-msg-required= "Please input last name", data-rule= "lastname", data-required= "true").form-control.contact-block__field__input
+          .contact-block__field
+            +input({
+              name: 'email',
+              type: 'email',
+              class: 'email',
+              textLabel: 'Email address*',
+              classLabel: 'contact-block__label'
+            })(data-msg-required= "Please input email", data-msg-email= "Please input email abc@cc.dd", data-rule= "email", data-required= "true").form-control.contact-block__field__input
+          .contact-block__field
+            +textarea({
+              name: 'message',
+              class: 'message',
+              title: 'message',
+              textLabel: 'Message*',
+              clasLabel: 'contact-block__label'
+            })(data-rule= "message" data-msg-required= "Please checked message").form-control.field-textarea
+
+        +button({
+          type: 'submit'
+        }).contact-block__submit
+          span SEND
+
